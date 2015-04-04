@@ -9,7 +9,7 @@
 		$menu_name = mysql_prep($_POST["menu_name"]);
 		$position = (int) $_POST["position"];
 		$visible = (int) $_POST["visible"];
-
+		
 		//validations
 		$required_fields = array("menu_name", "position", "visible");
 		validate_presences($required_fields);

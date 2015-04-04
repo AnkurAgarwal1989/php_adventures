@@ -1,0 +1,5 @@
+To redirect to any page:
+<?php
+header("Location: " . $new_location);
+?>
+Make sure there is no tags or any info being sent before the header.
