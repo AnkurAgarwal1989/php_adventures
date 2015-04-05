@@ -43,6 +43,7 @@ function form_errors($errors = array()) {
 }
 
 // Get all subjects from the Table subjects
+//If public is true...get only visible entries
 function find_all_subjects($public = true) {
     global $connection;
     // 2. Perform database query
@@ -61,6 +62,7 @@ function find_all_subjects($public = true) {
 }
 
 //Find pages for a subject
+//If public is true...get only visible entries
 function find_pages_for_subject($subject_id, $public = true) {
     global $connection;
     //check for sql injection
@@ -82,7 +84,9 @@ function find_pages_for_subject($subject_id, $public = true) {
     return $page_set;
 }
 
-//Find subject from table given ID
+//Find full row of subject from table given ID
+//Uses associative query
+//If public is true...get only visible entries
 function find_subject_by_id($subject_id, $public = true) {
     global $connection;
     //check for sql injection
@@ -107,6 +111,9 @@ function find_subject_by_id($subject_id, $public = true) {
     }
 }
 
+//Find full row of page from table given ID
+//Uses associative query
+//If public is true...get only visible entries
 function find_page_by_id($page_id, $public = true) {
     global $connection;
     //check for sql injection
@@ -131,15 +138,9 @@ function find_page_by_id($page_id, $public = true) {
     }
 }
 
-function find_default_page_for_subject($subject_id) {
-    $page_set = find_pages_for_subject($subject_id);
-    if ($first_page = mysqli_fetch_assoc($page_set)) {
-        return $first_page;
-    } else {
-        return null;
-    }
-}
-
+//Find what page needs to be highlighted/opened when user clicks.
+//If user clicks a page, find its parent subject
+//If a subject is selected...highlight default page
 //no args required as it uses the global var $_GET
 function find_selected_page($public = false) {
     global $curr_subject;
@@ -160,6 +161,18 @@ function find_selected_page($public = false) {
     }
 }
 
+//Returns the default page for the subject
+function find_default_page_for_subject($subject_id) {
+    $page_set = find_pages_for_subject($subject_id);
+    if ($first_page = mysqli_fetch_assoc($page_set)) {
+        return $first_page;
+    } else {
+        return null;
+    }
+}
+
+
+//Function to display navigation links in sidebar 1 for admin
 //Takes 2 args:
 // Current subject array or null;
 // Current page array or null;
@@ -212,6 +225,10 @@ function navigation($subject_array, $page_array) {
     return $output;
 }
 
+//Function to display navigation links in sidebar 1 for non-admin
+//args:
+    //Current subject array or null
+    //Current page array or null
 function public_navigation($subject_array, $page_array) {
 
     $output = "<ul class = \"subjects\">";
@@ -223,7 +240,7 @@ function public_navigation($subject_array, $page_array) {
             $output .= " class =\"selected\"";
         }
         $output .= ">";
-
+        
         $output .= "<a href =\"index.php?subject=";
         $output .= urlencode($subject["id"]);
         $output .= "\">";
