@@ -1,5 +1,13 @@
+HTTP server and request variables
+these are super GLOBAL Variables:
+$_GET, $_POST, $_COOKIE, $_SESSION, $_SERVER
+
+
 To redirect to any page:
 <?php
 header("Location: " . $new_location);
 ?>
 Make sure there is no tags or any info being sent before the header.
+
+Variable variables:
+$${var[1]} or ${$var}[1]
