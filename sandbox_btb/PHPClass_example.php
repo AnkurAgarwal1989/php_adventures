@@ -1,7 +1,7 @@
 <?php
 
 class Person {
-    //put your class code here
-    
+    //put your class code here   
 }
+
 ?>
