@@ -23,6 +23,31 @@ class MySQLDatabase {
         }
     }
     
+    public function query($sql_query){
+        $result = mysqli_query($this->connection, $this->mysql_prep($sql_query));
+        $this->confirm_query($result);        
+        //Return the result
+        return $result;
+    }
+    
+    //Function to prepare mySQL query.
+    public function mysql_prep($string) {
+        //Escape special characters...to prevent injection attacks
+        $escaped_string = mysqli_real_escape_string($this->connection, $string);
+        return $escaped_string;
+    }
+
+    //Function confirms if returned query from SQL is not null...
+    //if NULL..dies with an error message
+    private function confirm_query($result_set) {
+        if (!$result_set) {
+            die("Database query failed.");
+        }
+    }
+    
+    
+    //Close DB connection...if connection exists...
+    //Unset the private variable 
     public function close_connection(){
         if (isset($this->connection)){
             mysqli_close($this->connection);
