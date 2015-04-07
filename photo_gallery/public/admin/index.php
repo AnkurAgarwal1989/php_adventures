@@ -2,8 +2,7 @@
 /* 
  * Index page for admin folder
  */
-require_once('../../includes/functions.php');
-require_once('../../includes/session.php');
+require_once ('../../includes/initialize.php');
 
 //If person is not logged in..redirect to login page
 if(!($session->is_logged_in())){

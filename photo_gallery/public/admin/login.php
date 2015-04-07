@@ -2,10 +2,7 @@
 /* 
  * Login Page
  */
-require_once ('../../includes/functions.php');
-require_once ('../../includes/session.php');
-require_once ('../../includes/database.php');
-require_once ('../../includes/user.php');
+require_once ('../../includes/initialize.php');
 
 //If session is already logged in...redirect to admin index page
 if(($session->is_logged_in())){
