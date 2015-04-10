@@ -10,24 +10,8 @@ if(!($session->is_logged_in())){
 }
 ?>
 
-<html>
-    <head>
-        <title>Photo Gallery Admin</title>
-        <link href="../stylesheets/main.css" media="all" rel="stylesheet"
-              type="text/css" />
-    </head>
-    
-    <body>
-        <div id ="header">
-            <h1>Photo Gallery Admin</h1>
-        </div>
-        
-        <div id ="main">
+<?php include_layout_template('admin_header.php') ?>
+
             <h2>Menu</h2>
-        </div>
         
-        <div id ="footer">
-            Copyright <?php echo date('Y', time()); ?>, Ankur
-        </div>
-    </body>
-</html>
+<?php include_layout_template('admin_footer.php') ?>

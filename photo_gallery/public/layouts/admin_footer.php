@@ -1,8 +1,11 @@
-<?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+        </div>
+        
+        <div id ="footer">
+            Copyright <?php echo date('Y', time()); ?>, Ankur
+        </div>
+    </body>
+</html>
+<?php if(isset($database)) {
+    $database->close_connection();
+}  
+?>
