@@ -22,11 +22,10 @@ if(isset($_POST['submit'])){
     
     //Once authenticated...add to session...redirect to right page
     if($found_user){
-        echo "Login Successful";
         $session->login($found_user);
         $message = "Log in successful...";
+        //redirect...don't echo messages here...
         redirect_to('index.php');
-        
     }
     else{
         $message = "Username/Password combination does not exist";
