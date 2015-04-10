@@ -5,7 +5,7 @@ require_once("database.php");
  *
  * @author Ankur
  */
-class User {
+class User extends DatabaseObject{
     
     //Every column in users table can be made an attribute
     public $id;
@@ -13,8 +13,35 @@ class User {
     public $password;
     public $first_name;
     public $last_name;
-
     
+    
+    //Unique functions for the class
+    public static function authenticate($username = "", $password = ""){
+        global $database;
+        
+        $username = $database->escape_value($username);
+        $password = $database->escape_value($password);
+      
+        $query = "SELECT * FROM users ";
+        $query .= "WHERE username = '{$username}' ";
+        $query .= "AND password = '{$password}' ";
+        $query .= "LIMIT 1";
+        
+        $result_array = self::find_by_sql($query);
+        return !empty($result_array) ? array_shift($result_array) : false;
+    }
+    
+    public function full_name(){
+        if(isset($this->first_name) && isset($this->last_name)){
+            return $this->first_name ." ". $this->last_name;
+        }
+        else{
+            return "";
+        }
+    }
+    
+    
+    //Common functions for the class
     public static function find_all(){
         //This returns an array of user object
         return User::find_by_sql("SELECT * FROM users");
@@ -40,29 +67,6 @@ class User {
         return $object_array;
     }
     
-    public static function authenticate($username = "", $password = ""){
-        global $database;
-        
-        $username = $database->escape_value($username);
-        $password = $database->escape_value($password);
-      
-        $query = "SELECT * FROM users ";
-        $query .= "WHERE username = '{$username}' ";
-        $query .= "AND password = '{$password}' ";
-        $query .= "LIMIT 1";
-        
-        $result_array = self::find_by_sql($query);
-        return !empty($result_array) ? array_shift($result_array) : false;
-    }
-    
-    public function full_name(){
-        if(isset($this->first_name) && isset($this->last_name)){
-            return $this->first_name ." ". $this->last_name;
-        }
-        else{
-            return "";
-        }
-    }
     
     //func takes a record and assigns right values to the attributes
     private static function instantiate($record){
