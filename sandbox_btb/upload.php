@@ -6,11 +6,24 @@ $upload_errors = array(
     ,UPLOAD_ERR_PARTIAL        => "The uploaded file was only partially uploaded"
     ,UPLOAD_ERR_NO_FILE        => "No file was uploaded"
 );
-//print_r(isset($_FILES['file_upload']) ? $_FILES['file_upload'] : null);
-$message = isset($_FILES['file_upload']) ? $upload_errors[$_FILES['file_upload']['error']] : null;
 
-//$message = $upload_errors[isset($error) ? $error : ""];
-echo "<hr />";
+if(isset($_POST['submit'])){
+    //process form data
+    $tmp_file_name = $_FILES['file_upload']['tmp_name'];
+    
+    //we can give any target name..here we are just getting the file name and escaping it
+    $target_file_name = basename($_FILES['file_upload']['name']);
+    echo $target_file_name . PHP_EOL;
+    $upload_dir = "uploads";
+    
+    //We would need to check if the file already exists so that we don't over write it
+    if(move_uploaded_file($tmp_file_name, $upload_dir."/".$target_file_name)){
+        $message = "File uploaded successfully";
+    }else{
+        $error = $_FILES['file_upload']['error'];
+        $message = $upload_errors[$error];
+    }
+}
 ?>
 
 <html>
@@ -22,6 +35,7 @@ echo "<hr />";
         <?php if(!empty($message)) { echo "<p>{$message}</p>"; } ?>
         
         <!-- This shows that this data will be sent in multiple parts..as we are uploading a file -->
+        <!-- This uploads files to server..where they live in a temporary directory.-->
         <form action ="upload.php" enctype="multipart/form-data" method="POST">
             <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
             <!-- Input type for file upload -->
