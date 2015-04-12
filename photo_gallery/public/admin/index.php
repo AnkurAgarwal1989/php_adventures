@@ -12,6 +12,8 @@ if(!($session->is_logged_in())){
 
 <?php include_layout_template('admin_header.php') ?>
 
-            <h2>Menu</h2>
+<h2>Menu</h2>
+<a href="logcheck.php">View log files</a><br />
+<a href="logout.php">Logout</a>
         
 <?php include_layout_template('admin_footer.php') ?>

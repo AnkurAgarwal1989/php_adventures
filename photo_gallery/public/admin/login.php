@@ -18,11 +18,13 @@ if(isset($_POST['submit'])){
     $password = trim($_POST['password']);
     
     //Check database if usename/password combination exists
+    //authenticate returns an instance of User
     $found_user = User::authenticate($username, $password);
     
     //Once authenticated...add to session...redirect to right page
     if($found_user){
         $session->login($found_user);
+        log_action("Login", "{$found_user->username} logged in");
         $message = "Log in successful...";
         //redirect...don't echo messages here...
         redirect_to('index.php');

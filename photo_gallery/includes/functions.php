@@ -39,8 +39,28 @@ function __autoload($class_name){
 }
 
 function include_layout_template($template = "") {
-    if (isset($template))
-        include(SITE_ROOT.DS.'public'.DS.'layouts'.DS.$template);
+    if (isset($template)) {
+        include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . $template);
+    }
+}
+
+function log_action($action, $msg="") {
+    //Check if the dir exists
+    if (!file_exists (SITE_ROOT.DS."logs")){
+        echo "Dir logs does not exist. <br/>";
+        mkdir(SITE_ROOT.DS."logs", 0777);
+        echo "logs dir created. <br/>";
+    }
+    $log_line = "";
+    $log_line .= strftime("%c", time());
+    $log_line .= " | ";
+    $log_line .= "{$action}: ";
+    $log_line .= "{$msg}\n";
+    $written = file_put_contents(SITE_ROOT.DS."logs".DS."log.txt", $log_line, LOCK_EX|FILE_APPEND);
+    
+    if(! ($written > 0) ){
+        echo "Could not write to log file";
+    }
 }
 
 ?>
