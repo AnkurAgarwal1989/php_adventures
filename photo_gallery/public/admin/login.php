@@ -19,7 +19,8 @@ if(isset($_POST['submit'])){
     
     //Check database if usename/password combination exists
     //authenticate returns an instance of User
-    $found_user = User::authenticate($username, $password);
+    $user = new User();
+    $found_user = $user->authenticate($username, $password);
     
     //Once authenticated...add to session...redirect to right page
     if($found_user){

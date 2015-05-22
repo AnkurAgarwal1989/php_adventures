@@ -56,7 +56,7 @@ class User extends DatabaseObject{
     }
     
     //Creates a new user
-    protected function create(){
+    public function create(){
         global $database;
         
         $sql = "INSERT INTO users ";
@@ -76,7 +76,7 @@ class User extends DatabaseObject{
     }
     
     //Update existing user
-    protected function update(){
+    public function update(){
         global $database;
         
         //UPDATE users
